@@ -1,0 +1,80 @@
+Welcome to Algorithm::LinearFit::Random!
+
+SUMMARY
+-------------------------------------------------------------------------------
+
+This module can be used to efficiently estimate a multiple linear regression in
+n-dimensional space.  This is typically most useful in inconsistent,
+overdetermined matrices where the "best fit" line is desired.
+
+The method it uses to do this is to randomly adjust parameters, and check if
+the resulting fit is better (has a lower RMSE) than the previous version.  Over
+the course of several generations, the parameters converge on a solution that
+produces the minimum error.
+
+This means that the the parameters may get "stuck" in a local minima.  Optimal
+selection of the random adjustment function may help prevent this problem.
+
+Since the bulk of this module is written in C, it is pretty fast.  On my own
+datasets, it runs over 100x faster than the pure Perl version.
+
+
+USE CASE
+-------------------------------------------------------------------------------
+
+Put another way, this module can be used to find the coefficient weights of
+a dataset with multiple parameters.  For example, given the data set:
+
+    Source A   Source B   Source C   Solution
+           6         -4          5        4.0
+           1          4          6        3.0
+           2          8          7        6.0
+           1          3          8        2.5
+
+The module would attempt to calculate the coefficient weights each source,
+yielding the values [1, 0.5, 0].  Applying these to the original data,
+we can verify the match.
+
+         1*6   +  .5*-4   +    0*5   =    4.0
+         1*1   +  .5* 4   +    0*6   =    3.0
+         1*2   +  .5* 8   +    0*7   =    6.0
+         1*1   +  .5* 3   +    0*8   =    2.5
+
+A sample script, describing this use case, is available in example.pl
+
+
+GETTING STARTED
+-------------------------------------------------------------------------------
+
+Installation requires SWIG (www.swig.org) and gcc.  Building this module may be
+simplified by running "perl install.pl" to build the SWIG interface and compile
+the shared object.
+
+This is clearly not ideal, and should really be replaced with a Makefile.PL
+script at some point in the future.  Eventually this whole thing ought to be
+cleaned up, with error handling and unit tests, and then put on CPAN.
+
+For development purposes, the library can be compiled as a standalone demo.
+See src/main.c for more information.
+
+
+SWIG NOTES
+-------------------------------------------------------------------------------
+
+The module is primarily written in C, for efficiency when calculating large
+data sets.  To interface back to the Perl, it uses the SWIG libraries.  More
+documentation is available from:
+
+    http://www.swig.org/Doc2.0/SWIGDocumentation.html
+
+More details on passing arrays of floats between Perl and C is at;
+
+    http://www.swig.org/Doc2.0/Library.html#Library_carrays
+
+TODO
+-------------------------------------------------------------------------------
+
+- Create a Makefile.PL instead of our custom build script.
+- Add some unit tests, improve error handling.
+- Instead of having a fixed adjustment window of 0.2, make a intelligent guess.
+
