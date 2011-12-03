@@ -135,7 +135,7 @@ double _calculate_rmse(struct MatrixRow* matrix, int column_count, double weight
     }
 
     // return the RMSE
-    return ( sqrt(sum_of_squares) / row_count );
+    return ( sqrt(sum_of_squares / row_count) );
 }
 
 void _dump_matrix(struct MatrixRow *matrix, int column_count) {
