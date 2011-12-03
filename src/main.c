@@ -27,7 +27,7 @@ int main () {
     int iterations = 100000;
 
     double ending_weights[DIMENSIONS] = { 0, 0, 0 };
-    double RMSE = tune_parameters(matrix, DIMENSIONS, starting_weights, iterations, ending_weights);
+    double RMSE = tune_parameters(matrix, DIMENSIONS, starting_weights, iterations, ending_weights) / 10000;
 
     // demonstrate output results
     printf ("RMSE: %.5f\n", RMSE);
