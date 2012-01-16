@@ -59,7 +59,7 @@ my $generations = 1_000;
 my $start_weights = [0, 0, 0];
 
 # Optimize weights for smallest RMSE
-my ( $rmse, $end_weights ) = $matrix->tune_parameters( $start_weights, $generations );
+my ($rmse, $end_weights) = $matrix->tune_parameters($start_weights, $generations);
 
 
 GETTING STARTED
