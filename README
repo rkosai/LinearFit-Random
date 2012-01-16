@@ -42,6 +42,25 @@ we can verify the match.
 
 A sample script, describing this use case, is available in example.pl
 
+PERL INTERFACE EXAMPLE
+-------------------------------------------------------------------------------
+
+Part of the magic is that all the complexity of interacting with C is
+abstracted away behind a clean idiomatic-Perl interface.  For example:
+
+#!perl -w
+use Algorithm::LinearFit::Random;
+
+my $matrix = new Algorithm::LinearFit::Random( INPUTS => 3 );
+$matrix->add_row( [6, -4, 5] , 4.00 );
+$matrix->add_row( [1,  3, 8] , 2.50 );
+
+my $generations = 1_000;
+my $start_weights = [0, 0, 0];
+
+# Optimize weights for smallest RMSE
+my ( $rmse, $end_weights ) = $matrix->tune_parameters( $start_weights, $generations );
+
 
 GETTING STARTED
 -------------------------------------------------------------------------------
